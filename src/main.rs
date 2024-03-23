@@ -4,7 +4,7 @@ use std::process::{Command, Stdio};
 use std::thread;
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:4444").expect("Failed to bind");
+    let listener = TcpListener::bind("0.0.0.0:4444").expect("Failed to bind");
 
     println!("Server listening on port 4444");
 
