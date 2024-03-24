@@ -10,26 +10,19 @@ fn main() {
     let listener = TcpListener::bind("0.0.0.0:4444").expect("Failed to bind");
 
     println!("Server listening on port 4444");
-    let mut handles = Vec::new(); // Vector to hold thread handles
 
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
                 println!("New connection: {}", stream.peer_addr().unwrap());
-                let handle = thread::spawn(move || {
+                thread::spawn(move || {
                     handle_client(stream);
                 });
-                handles.push(handle); // Store thread handle
             }
             Err(e) => {
                 eprintln!("Error accepting connection: {}", e);
             }
         }
-    }
-
-    // Join all threads before exiting
-    for handle in handles {
-        handle.join().expect("Failed to join thread");
     }
 }
 
